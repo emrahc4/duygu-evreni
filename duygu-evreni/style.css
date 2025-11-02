@@ -1,0 +1,94 @@
+/* =================================================================
+   DUYGU EVRENİ - ANA STİL DOSYASI
+   Mimar: Gemini
+   Versiyon: 2.4 (Shader Arka Plan Dahil)
+   ================================================================= */
+:root { --background-color: #0D1B2A; --text-color: #E0E1DD; --accent-color: #FFC300; --secondary-text-color: #778DA9; --card-background: rgba(255, 255, 255, 0.05); --card-border: rgba(255, 255, 255, 0.1); --card-hover-background: rgba(255, 255, 255, 0.1); --card-hover-shadow: rgba(0, 0, 0, 0.3); --font-heading: 'Playfair Display', serif; --font-body: 'Lato', sans-serif; --font-quote-default: 'Caveat', cursive; --font-quote-standard: 'Lato', sans-serif; --font-quote-active: var(--font-quote-default); --anim-duration-default: 10s; --anim-duration-slow: 15s; --anim-duration-fast: 7s; --anim-duration-active: var(--anim-duration-default); }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: var(--font-body); background-color: var(--background-color); color: var(--text-color); overflow: hidden; height: 100vh; display: flex; justify-content: center; align-items: center; text-align: center; transition: background-color 0.4s ease, color 0.4s ease; }
+#preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--background-color); display: flex; justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.75s ease, visibility 0.75s ease; }
+#preloader.hidden { opacity: 0; visibility: hidden; }
+.spinner { width: 50px; height: 50px; border: 5px solid var(--secondary-text-color); border-top-color: var(--accent-color); border-radius: 50%; animation: spin 1s ease-in-out infinite; }
+#shader-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; opacity: 0; transition: opacity 1.5s ease-out; pointer-events: none; }
+#shader-canvas.visible { opacity: 1; }
+#particles-js { position: absolute; width: 100%; height: 100%; z-index: -1; transition: opacity 0.8s ease; }
+body.background-off #particles-js { opacity: 0; pointer-events: none; }
+.top-controls { position: fixed; top: 20px; right: 20px; display: flex; gap: 10px; z-index: 1000; }
+.top-controls button, #theme-toggle { width: 40px; height: 40px; background-color: var(--card-background); border: 1px solid var(--card-border); border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease; padding: 0; color: var(--secondary-text-color); }
+.top-controls button:hover, #theme-toggle:hover { background-color: var(--card-hover-background); color: var(--text-color); }
+.top-controls button svg { width: 20px; height: 20px; }
+#theme-toggle svg { width: 24px; height: 24px; transition: transform 0.4s ease, fill 0.4s ease; }
+#mute-button svg { width: 22px; height: 22px; }
+#settings-panel { position: fixed; top: 70px; right: 20px; background-color: rgba(0,0,0,0.6); backdrop-filter: blur(10px); border: 1px solid var(--card-border); border-radius: 15px; padding: 25px; z-index: 1001; width: 300px; text-align: left; opacity: 0; visibility: hidden; transform: translateY(-20px); transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s ease; }
+#settings-panel.active { opacity: 1; visibility: visible; transform: translateY(0); }
+#settings-panel h3 { font-family: var(--font-heading); margin-bottom: 20px; text-align: center; color: var(--text-color); }
+.setting-group { margin-bottom: 20px; }
+.setting-group label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--secondary-text-color); }
+.radio-group { display: flex; gap: 15px; }
+.radio-group label { font-weight: normal; margin-bottom: 0; display: flex; align-items: center; cursor: pointer; color: var(--text-color); }
+.radio-group input[type="radio"] { margin-right: 5px; accent-color: var(--accent-color); }
+#background-toggle { accent-color: var(--accent-color); transform: scale(1.2); margin-left: 5px;}
+#close-settings-button { position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 24px; color: var(--secondary-text-color); cursor: pointer; transition: color 0.3s ease; line-height: 1; padding: 5px; }
+#close-settings-button:hover { color: var(--text-color); }
+.screen { position: absolute; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 2rem; opacity: 0; visibility: hidden; transform: translateY(20px); transition: opacity 0.8s ease-out, transform 0.8s ease-out, visibility 0.8s; }
+.screen.active { opacity: 1; visibility: visible; transform: translateY(0); }
+.content { max-width: 900px; width: 100%; z-index: 1; }
+.title { font-family: var(--font-heading); font-size: 5rem; font-weight: 700; margin-bottom: 1rem; }
+.subtitle { font-size: 1.2rem; font-weight: 300; color: var(--secondary-text-color); margin-bottom: 3rem; letter-spacing: 1px; }
+.button-group { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; }
+#start-screen button { font-family: var(--font-body); font-size: 1.1rem; font-weight: 400; background: none; padding: 0.8rem 2.5rem; border-radius: 50px; cursor: pointer; transition: all 0.3s ease; outline: none; }
+#start-button { color: var(--accent-color); border: 2px solid var(--accent-color); order: 1;}
+#start-button:hover { background-color: var(--accent-color); color: var(--background-color); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); }
+#surprise-me-button { color: var(--text-color); border: 2px solid var(--text-color); order: 2; }
+#surprise-me-button:hover { background-color: var(--text-color); color: var(--background-color); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); }
+#start-favorites-button { color: var(--secondary-text-color); border: 2px solid var(--secondary-text-color); order: 3; }
+#start-favorites-button:hover { background-color: var(--secondary-text-color); color: var(--background-color); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); }
+.prompt { font-family: var(--font-heading); font-size: 2.5rem; margin-bottom: 3rem; opacity: 0; transition: opacity 1s ease-in-out 0.5s; }
+.feeling-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem; width: 100%; max-width: 900px; }
+.feeling-card { background-color: var(--card-background); border: 1px solid var(--card-border); backdrop-filter: blur(5px); border-radius: 15px; padding: 2rem 1rem; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; cursor: pointer; opacity: 0; transform: translateY(30px); transition: transform 0.5s ease, background-color 0.3s ease, box-shadow 0.3s ease, opacity 0.5s ease; }
+.feeling-card.visible { opacity: 1; transform: translateY(0); }
+.feeling-card:hover { transform: translateY(-10px); background-color: var(--card-hover-background); box-shadow: 0 15px 30px var(--card-hover-shadow), 0 0 20px var(--accent-color); }
+.feeling-card svg { width: 40px; height: 40px; color: var(--accent-color); transition: transform 0.3s ease; }
+.feeling-card:hover svg { transform: scale(1.1); }
+.feeling-card span { font-size: 1.1rem; font-weight: 400; color: var(--text-color); }
+.back-button-corner { position: absolute; top: 20px; left: 20px; width: 40px; height: 40px; background-color: var(--card-background); border: 1px solid var(--card-border); border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 1000; transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease; padding: 0; color: var(--secondary-text-color); }
+.back-button-corner:hover { background-color: var(--card-hover-background); color: var(--text-color); }
+.back-button-corner svg { width: 24px; height: 24px; }
+#display-screen { background: none; overflow: hidden; }
+.quote-wrapper { position: absolute; max-width: 500px; text-align: center; opacity: 0; animation: etherealDrift var(--anim-duration-active) ease-in-out forwards; pointer-events: none; }
+#display-screen.paused .quote-wrapper { animation-play-state: paused; }
+.quote-main { font-family: var(--font-quote-active); font-size: 2.2rem; color: var(--text-color); font-weight: 700; text-shadow: 1px 1px 5px rgba(0,0,0,0.5); }
+.quote-author { font-family: var(--font-body); font-size: 1.1rem; color: var(--secondary-text-color); font-style: italic; margin-top: 1rem; text-shadow: 1px 1px 3px rgba(0,0,0,0.4); }
+.controls { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 0.5rem; background-color: var(--card-background); backdrop-filter: blur(5px); padding: 8px; border-radius: 50px; z-index: 10; border: 1px solid var(--card-border); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+.controls button { background: none; border: none; color: var(--secondary-text-color); cursor: pointer; padding: 0; display: flex; align-items: center; justify-content: center; transition: color 0.3s ease, background-color 0.3s ease; width: 44px; height: 44px; border-radius: 50%; position: relative; }
+.controls button:hover { color: var(--text-color); background-color: var(--card-hover-background); }
+.controls button svg { width: 24px; height: 24px; }
+#like-button .like-icon { stroke: var(--secondary-text-color); fill: none; transition: fill 0.3s ease, stroke 0.3s ease, transform 0.3s ease; }
+#like-button.liked .like-icon { fill: #e74c3c; stroke: #e74c3c; }
+#like-button.heart-pop .like-icon { animation: heartPop 0.6s ease-out forwards; }
+.favorites-content { width: 100%; padding-bottom: 100px; }
+#favorites-screen h2 { font-family: var(--font-heading); font-size: 3rem; margin-bottom: 2rem; }
+#favorites-list { list-style: none; padding: 0; margin-bottom: 2rem; max-height: 60vh; overflow-y: auto; width: 100%; max-width: 700px; text-align: left; padding-right: 10px; }
+#favorites-list li { background-color: var(--card-background); border: 1px solid var(--card-border); backdrop-filter: blur(5px); border-radius: 10px; padding: 1.5rem; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+#favorites-list .fav-quote-content { flex-grow: 1; }
+#favorites-list .fav-quote-text { font-family: var(--font-quote-active); font-size: 1.6rem; color: var(--text-color); margin-bottom: 0.5rem; }
+#favorites-list .fav-quote-author { font-family: var(--font-body); font-size: 1rem; color: var(--secondary-text-color); font-style: italic; display: block; }
+.fav-actions button { background: none; border: none; color: var(--secondary-text-color); cursor: pointer; padding: 5px; font-size: 1.3rem; transition: color 0.3s ease; line-height: 1; }
+.fav-actions { display: flex; gap: 0.5rem; align-items: center; }
+.copy-fav-button:hover { color: var(--accent-color); }
+.delete-fav-button:hover { color: #e74c3c; }
+#back-from-favorites-button { font-family: var(--font-body); font-size: 1.1rem; background: none; color: var(--secondary-text-color); border: 2px solid var(--secondary-text-color); padding: 0.8rem 2.5rem; border-radius: 50px; cursor: pointer; transition: all 0.3s ease; outline: none; margin-top: 1rem; }
+#back-from-favorites-button:hover { background-color: var(--secondary-text-color); color: var(--background-color); }
+#theme-toggle svg { width: 24px; height: 24px; transition: transform 0.4s ease, fill 0.4s ease; }
+body.light-theme { --background-color: #F0F2F5; --text-color: #1c1e21; --secondary-text-color: #606770; --card-background: #FFFFFF; --card-border: #DADDE1; --card-hover-background: #F0F2F5; --card-hover-shadow: rgba(0, 0, 0, 0.1); background: var(--background-color); animation: none; }
+body.light-theme #shader-canvas { opacity: 0 !important; }
+body.light-theme #theme-toggle svg { transform: rotate(180deg); fill: var(--text-color); }
+body:not(.light-theme) #theme-toggle svg { fill: var(--accent-color); }
+body.light-theme .top-controls button { color: var(--secondary-text-color); }
+body.light-theme .top-controls button:hover { color: var(--text-color); }
+body.light-theme .top-controls button svg { color: inherit; }
+#copy-notification { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background-color: var(--accent-color); color: var(--background-color); padding: 10px 20px; border-radius: 20px; z-index: 1002; font-size: 0.9rem; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; pointer-events: none; }
+#copy-notification.show { opacity: 1; visibility: visible; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes etherealDrift { 0% { opacity: 0; transform: translateY(40px) scale(0.95) rotate(-3deg); } 20% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); } 80% { opacity: 1; transform: translateY(-40px) scale(1.05) rotate(3deg); } 100% { opacity: 0; transform: translateY(-80px) scale(0.9) rotate(-6deg); } }
+@keyframes heartPop { 0% { transform: scale(1); } 50% { transform: scale(1.4); } 100% { transform: scale(1); } }
