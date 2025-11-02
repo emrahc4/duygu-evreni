@@ -1,3 +1,4 @@
+<img width="1912" height="866" alt="Image" src="https://github.com/user-attachments/assets/1522447b-4cde-414e-949c-f1012c405fbf" />
 Duygu Evreni (Mood Universe)
 "Kelimeler, duyguların haritasıdır."
 
